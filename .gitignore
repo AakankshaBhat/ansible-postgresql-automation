@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Ansible
+*.retry
+
+# Local inventory
+inventory/hosts.ini
+
+# Local secrets
+vault-password-file

@@ -1,0 +1,24 @@
+---
+- name: Configure Postgres parameters
+  hosts: postgres_servers
+  become: true
+ 
+  tasks:
+   - name: Set PostgreSQL max_connections and shared_buffer value
+     community.postgresql.postgresql_alter_system:
+      param: "{{item.name}}"
+      value: "{{item.value}}"
+      login_unix_socket: /var/run/postgresql
+     loop:
+       - name: max_connections
+         value: "{{postgresql_config.max_connections }}"
+       - name: shared_buffers
+         value: "{{postgresql_config.shared_buffers }}"
+     become_user: postgres
+     notify: Restart PostgreSQL
+
+  handlers:
+   - name: Restart PostgreSQL
+     ansible.builtin.service:
+       name: postgresql
+       state: restarted

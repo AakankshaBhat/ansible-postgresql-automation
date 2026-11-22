@@ -1,0 +1,2 @@
+[postgres_servers]
+pg-primary ansible_host=YOUR_SERVER_IP ansible_user=YOUR_SSH_USER ansible_python_interpreter=/usr/bin/python3

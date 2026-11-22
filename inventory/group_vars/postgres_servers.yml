@@ -1,0 +1,4 @@
+---
+postgresql_config:
+  max_connections: 150
+  shared_buffers: 128MB

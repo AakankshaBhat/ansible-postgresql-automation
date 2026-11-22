@@ -1,0 +1,30 @@
+---
+- name: DB provisioning
+  hosts: postgres_servers
+  become: true
+ 
+  tasks:
+   - name: create a new database
+     community.postgresql.postgresql_db:
+      name: appdb
+      state: present
+      login_unix_socket: /var/run/postgresql
+     become_user: postgres
+
+   - name: create a DB user
+     community.postgresql.postgresql_user:
+      name: app_user
+      role_attr_flags: LOGIN
+      state: present
+      login_unix_socket: /var/run/postgresql
+     become_user: postgres
+
+   - name: grant permission to app_user on appdb
+     community.postgresql.postgresql_privs:
+      login_db: appdb
+      role: app_user
+      type: database
+      privs: ALL
+      state: present
+      login_unix_socket: /var/run/postgresql
+     become_user: postgres

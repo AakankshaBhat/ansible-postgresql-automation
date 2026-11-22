@@ -1,0 +1,9 @@
+---
+- name: Deploy PostgreSQL database platform
+  hosts: postgres_servers
+  become: true
+
+  roles:
+    - postgres_install
+    - postgres_config
+    - postgres_provision
