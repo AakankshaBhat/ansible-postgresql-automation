@@ -1,23 +1,27 @@
 ---
 - name: create a new database
   community.postgresql.postgresql_db:
-    name: appdb
+    name: "{{postgresql_app_db}}"
     state: present
     login_unix_socket: /var/run/postgresql
   become_user: postgres
 
 - name: create a DB user
   community.postgresql.postgresql_user:
-    name: app_user
+    name: "{{postgresql_app_user}}"
+    password: "{{postgresql_app_user_password}}"
+    encrypted: true
+    no_password_changes: false
     role_attr_flags: LOGIN
     state: present
     login_unix_socket: /var/run/postgresql
   become_user: postgres
+  no_log: true
 
 - name: grant permission to app_user on appdb
   community.postgresql.postgresql_privs:
-    login_db: appdb
-    role: app_user
+    login_db: "{{postgresql_app_db}}"
+    role: "{{postgresql_app_user}}"
     type: database
     privs: ALL
     state: present

@@ -2,3 +2,6 @@
 postgresql_config:
   max_connections: 150
   shared_buffers: 128MB
+
+postgresql_app_db: app_db
+postgresql_app_user: app_user
